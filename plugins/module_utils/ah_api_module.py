@@ -46,11 +46,18 @@ class AHAPIModule(AnsibleModule):
     AUTH_ARGSPEC = dict(
         ah_host=dict(
             required=False,
-            aliases=["ah_hostname"],
-            fallback=(env_fallback, ["AH_HOST"]),
+            aliases=["ah_hostname", "aap_hostname"],
+            fallback=(env_fallback, ["AH_HOST", "AAP_HOSTNAME"]),
         ),
-        ah_username=dict(required=False, fallback=(env_fallback, ["AH_USERNAME"])),
-        ah_password=dict(no_log=True, required=False, fallback=(env_fallback, ["AH_PASSWORD"])),
+        ah_username=dict(
+            required=False,
+            aliases=["aap_username"],
+            fallback=(env_fallback, ["AH_USERNAME", "AAP_USERNAME"])),
+        ah_password=dict(
+            no_log=True,
+            required=False,
+            aliases=["aap_password"],
+            fallback=(env_fallback, ["AH_PASSWORD", "AAP_PASSWORD"])),
         ah_path_prefix=dict(
             required=False,
             default="galaxy",
@@ -58,14 +65,15 @@ class AHAPIModule(AnsibleModule):
         ),
         validate_certs=dict(
             type="bool",
-            aliases=["ah_verify_ssl"],
+            aliases=["ah_verify_ssl", "aap_validate_certs"],
             required=False,
-            fallback=(env_fallback, ["AH_VERIFY_SSL"]),
+            fallback=(env_fallback, ["AH_VERIFY_SSL", "AAP_VALIDATE_CERTS"]),
         ),
         request_timeout=dict(
             type="float",
+            aliases=["aap_request_timeout"],
             required=False,
-            fallback=(env_fallback, ["AH_REQUEST_TIMEOUT"])
+            fallback=(env_fallback, ["AH_REQUEST_TIMEOUT", "AAP_REQUEST_TIMEOUT"])
         ),
     )
     short_params = {
